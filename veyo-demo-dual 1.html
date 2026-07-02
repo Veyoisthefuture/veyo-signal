@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veyo — Begin with a name.</title>
+<meta name="description" content="The Luxury Intelligence Maison. Confidential dossiers for creators and brands.">
+<meta property="og:title" content="Veyo — The Luxury Intelligence Maison">
+<meta property="og:description" content="For Creators. For Brands. The methodology of maison evaluation, now yours to read.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,200;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Family office palette. Warm-blacks, cream, single champagne accent. */
+    --bg: #08090C;
+    --bg-warm: #0C0D0F;
+    --surface: #101114;
+    --surface-raised: #14161A;
+    --border: #1C1E22;
+    --border-warm: #24272C;
+    --text: #E8E3D8;
+    --text-dim: #B8B2A6;
+    --text-muted: #6E6862;
+    --text-faint: #4A453F;
+    --champ: #C4A572;
+    --champ-soft: #D4B882;
+    --champ-glow: rgba(196,165,114,0.06);
+    --champ-dim: rgba(196,165,114,0.12);
+    --champ-border: rgba(196,165,114,0.22);
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Ambient warmth */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(ellipse, rgba(196,165,114,0.025) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ═════════════════════════════════════════════
+     LANDING STATE (entrance)
+     ═════════════════════════════════════════════ */
+
+  .veyo-mark {
+    text-align: center;
+    padding: 48px 0 0;
+  }
+
+  .veyo-mark span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.85;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .hero {
+    padding: 100px 0 24px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 0.3s forwards;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    font-weight: 200;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .hero .whisper {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .ornament {
+    text-align: center;
+    padding: 32px 0;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.6s forwards;
+  }
+
+  .ornament .mark {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--champ);
+    opacity: 0.7;
+  }
+
+  /* Input */
+  .input-section {
+    padding: 0 0 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.8s forwards;
+  }
+
+  .name-input {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.01em;
+    outline: none;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .name-input::placeholder {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.5;
+    font-weight: 200;
+  }
+
+  .name-input:focus {
+    border-color: var(--champ-border);
+    box-shadow: 0 0 0 1px var(--champ-dim), 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  /* Type selector */
+  .type-area {
+    text-align: center;
+    margin-top: 28px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+  }
+
+  .type-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .type-btn {
+    flex: 1;
+    padding: 12px 24px;
+    background: var(--surface);
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    position: relative;
+  }
+
+  .type-btn:hover {
+    color: var(--text-dim);
+    background: var(--surface-raised);
+  }
+
+  .type-btn.selected {
+    color: var(--champ);
+    background: var(--champ-glow);
+  }
+
+  .type-btn.selected::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: var(--champ);
+    opacity: 0.5;
+  }
+
+  /* CTA */
+  .cta-area {
+    text-align: center;
+    margin-top: 32px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.1s forwards;
+  }
+
+  .read-btn {
+    display: inline-block;
+    padding: 14px 56px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    cursor: default;
+    transition: all 0.5s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .read-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+    border-color: var(--champ-border);
+    color: var(--champ);
+  }
+
+  .read-btn.active:hover {
+    background: var(--champ);
+    color: var(--bg);
+    border-color: var(--champ);
+    box-shadow: 0 4px 24px rgba(196,165,114,0.15);
+  }
+
+  .input-note {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 18px;
+    opacity: 0.5;
+    letter-spacing: 0.08em;
+  }
+
+  .error-msg {
+    text-align: center;
+    color: #C25550;
+    font-family: var(--font-body);
+    font-size: 13px;
+    margin-top: 20px;
+    display: none;
+  }
+
+  .error-msg.visible { display: block; }
+
+  /* Credential */
+  .credential {
+    text-align: center;
+    padding: 48px 0 80px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+
+  .credential .cred-border {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--champ-border), transparent);
+    margin: 0 auto 28px;
+  }
+
+  .credential p {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .credential .cred-nums {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+  }
+
+  .credential .cred-item {
+    text-align: center;
+  }
+
+  .credential .cred-val {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 200;
+    color: var(--champ);
+    line-height: 1;
+  }
+
+  .credential .cred-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 0 0 64px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.6s forwards;
+  }
+
+  .footer .footer-line {
+    width: 24px;
+    height: 1px;
+    background: var(--border-warm);
+    margin: 0 auto 28px;
+  }
+
+  .footer .footer-location {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .footer .footer-appointment {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+
+  .footer a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--champ);
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  .footer a:hover { opacity: 1; }
+
+  /* ═════════════════════════════════════════════
+     LOADING STATE (progressive reveal)
+     ═════════════════════════════════════════════ */
+
+  .loading-state {
+    display: none;
+    padding: 60px 0 100px;
+  }
+
+  .loading-state.visible { display: block; }
+
+  .loading-cover {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.2s forwards;
+  }
+
+  .loading-cover .cover-brand {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+
+  .loading-cover .cover-line {
+    width: 32px;
+    height: 1px;
+    background: var(--champ-border);
+    margin: 0 auto 20px;
+  }
+
+  .loading-cover .cover-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .loading-cover .cover-no {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+
+  .loading-cover .cover-prepared {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .loading-cover .cover-subject {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    min-height: 40px;
+  }
+
+  .loading-cover .cover-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.9;
+    min-height: 48px;
+  }
+
+  .loading-cover .cover-meta span {
+    color: var(--text-muted);
+  }
+
+  .loading-cover .cover-footer {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 28px;
+  }
+
+  .loading-agents {
+    text-align: center;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .loading-pulse {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--champ), transparent);
+    margin: 0 auto 28px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; width: 40px; }
+    50% { opacity: 0.9; width: 72px; }
+  }
+
+  .loading-agent {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.55;
+    margin-bottom: 8px;
+    transition: opacity 0.5s;
+  }
+
+  .loading-action {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+    min-height: 48px;
+    line-height: 1.5;
+    transition: opacity 0.5s;
+  }
+
+  .loading-timer {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    opacity: 0.3;
+    margin-top: 32px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+  }
+
+  /* ═════════════════════════════════════════════
+     DOSSIER STATE (final rendering)
+     ═════════════════════════════════════════════ */
+
+  .dossier {
+    display: none;
+    padding: 40px 0 80px;
+  }
+
+  .dossier.visible {
+    display: block;
+    animation: fadeIn 1s ease;
+  }
+
+  /* Page 1: Cover */
+  .dossier-cover {
+    text-align: center;
+    padding: 60px 0 80px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+
+  .dossier-cover .brand-mark {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--champ);
+    margin-bottom: 20px;
+  }
+
+  .dossier-cover .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--champ-border);
+    margin: 0 auto 32px;
+  }
+
+  .dossier-cover .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .dossier-cover .dossier-no {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 44px;
+  }
+
+  .dossier-cover .prepared-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .dossier-cover .subject-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    font-weight: 200;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .dossier-cover .subject-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+
+  .dossier-cover .subject-meta .meta-sep {
+    color: var(--champ);
+    opacity: 0.5;
+    margin: 0 8px;
+  }
+
+  .dossier-cover .cover-tail {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 40px;
+  }
+
+  /* Page 2: Reading */
+  .section {
+    margin-bottom: 64px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Tesis (thesis quote) */
+  .tesis {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.65;
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 56px;
+    padding: 0 32px;
+    position: relative;
+  }
+
+  .tesis::before, .tesis::after {
+    content: '"';
+    font-family: var(--font-display);
+    color: var(--champ);
+    opacity: 0.5;
+    font-size: 28px;
+  }
+
+  /* Veyo Index */
+  .index-block {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .index-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  .index-number {
+    font-family: var(--font-display);
+    font-size: 72px;
+    font-weight: 200;
+    color: var(--champ);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .index-outof {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .index-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--champ);
+    border: 1px solid var(--champ-border);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+
+  .index-percentile {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  /* Six stages scorecards */
+  .stages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+
+  .stage-card {
+    background: var(--surface);
+    padding: 22px 20px;
+  }
+
+  .stage-card .stage-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--champ);
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .stage-card .stage-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .stage-card .stage-bar {
+    height: 2px;
+    background: var(--border-warm);
+    border-radius: 1px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .stage-card .stage-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--champ) 0%, var(--champ-soft) 100%);
+    border-radius: 1px;
+  }
+
+  .stage-card .stage-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .stage-card .stage-score {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--champ);
+    font-style: italic;
+  }
+
+  /* Revenue projections */
+  .projections {
+    margin-bottom: 56px;
+  }
+
+  .projections-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .projections-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .projections-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  .projections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .proj-cell {
+    background: var(--surface);
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .proj-cell.middle {
+    background: var(--surface-raised);
+  }
+
+  .proj-cell .proj-tier {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .proj-cell .proj-value {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 200;
+    color: var(--champ);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .proj-cell .proj-metric {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .proj-cell .proj-condition {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Strategic finding & priority action */
+  .finding-block {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .finding-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.8;
+    margin-bottom: 16px;
+  }
+
+  .finding-text {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .priority-block {
+    padding: 24px 28px;
+    background: var(--champ-glow);
+    border: 1px solid var(--champ-border);
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+
+  .priority-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    margin-bottom: 12px;
+  }
+
+  .priority-text {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  .priority-text::before {
+    content: '→ ';
+    color: var(--champ);
+    font-weight: 300;
+  }
+
+  /* Observations */
+  .observation {
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .observation:last-child { border-bottom: 1px solid var(--border); }
+
+  .observation-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .observation-analysis {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .observation-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 16px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .observation-meta .meta-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    padding-top: 2px;
+  }
+
+  .observation-meta .meta-value {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* Competitive table */
+  .comp-table {
+    margin: 40px 0;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .comp-table-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comp-table-header .comp-cell {
+    padding: 14px 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .comp-table-header .comp-cell:first-child {
+    text-align: left;
+    color: var(--text-dim);
+  }
+
+  .comp-table-header .comp-cell.subject-col {
+    color: var(--champ);
+    background: var(--champ-glow);
+  }
+
+  .comp-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comp-row:last-child { border-bottom: none; }
+
+  .comp-row .comp-cell {
+    padding: 14px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: center;
+    background: var(--surface);
+  }
+
+  .comp-row .comp-cell:first-child {
+    text-align: left;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 12px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .comp-row .comp-cell.subject-col {
+    color: var(--champ);
+    background: var(--champ-glow);
+    font-weight: 500;
+  }
+
+  /* Stage analysis (full I & II, teased III-VI) */
+  .stage-full {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .stage-full .stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stage-full .stage-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .stage-full .stage-title .stage-roman {
+    color: var(--champ);
+    opacity: 0.7;
+    margin-right: 8px;
+  }
+
+  .stage-full .stage-score-big {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--champ);
+    font-style: italic;
+  }
+
+  .stage-full .stage-narrative {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .stage-full .critical-gap {
+    padding: 20px 24px;
+    background: var(--surface);
+    border-left: 2px solid var(--champ);
+    border-radius: 0 2px 2px 0;
+    margin-bottom: 24px;
+  }
+
+  .stage-full .critical-gap-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    margin-bottom: 10px;
+  }
+
+  .stage-full .critical-gap-text {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .stage-full .recommendations {
+    margin-top: 8px;
+  }
+
+  .stage-full .recommendations-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .stage-full .recommendation {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    padding: 10px 0 10px 20px;
+    position: relative;
+    border-top: 1px solid var(--border);
+  }
+
+  .stage-full .recommendation:first-of-type {
+    border-top: none;
+  }
+
+  .stage-full .recommendation::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--champ);
+    opacity: 0.6;
+  }
+
+  /* Stage teasers (III-VI) */
+  .teasers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-top: 40px;
+  }
+
+  .teaser {
+    background: var(--surface);
+    padding: 24px 22px;
+    position: relative;
+  }
+
+  .teaser .teaser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+
+  .teaser .teaser-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .teaser .teaser-title .roman {
+    color: var(--champ);
+    opacity: 0.7;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  .teaser .teaser-score {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--champ);
+    font-style: italic;
+  }
+
+  .teaser .teaser-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .teaser .teaser-cta {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Roadmap */
+  .roadmap {
+    margin-top: 64px;
+  }
+
+  .phase {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .phase-header {
+    margin-bottom: 28px;
+  }
+
+  .phase-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+
+  .phase-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .phase-subtitle {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .phase-actions {
+    display: grid;
+    gap: 16px;
+  }
+
+  .action-card {
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .action-agent {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+
+  .action-task {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .action-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .action-outcome {
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--champ);
+    opacity: 0.85;
+  }
+
+  .action-outcome::before {
+    content: '→ ';
+    color: var(--champ);
+  }
+
+  /* Founder note */
+  .founder-note {
+    margin-top: 80px;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .founder-note-body {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.85;
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  .founder-note-body em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .founder-signature {
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .founder-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .founder-role {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .founder-cred {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--champ);
+    opacity: 0.7;
+    margin-bottom: 24px;
+  }
+
+  .founder-contact {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* CTA to Tier II */
+  .tier-cta {
+    margin-top: 48px;
+    padding: 40px 32px;
+    background: var(--surface);
+    border: 1px solid var(--champ-border);
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .tier-cta-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--champ);
+    margin-bottom: 16px;
+  }
+
+  .tier-cta-text {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.55;
+    max-width: 440px;
+    margin: 0 auto 24px;
+  }
+
+  .tier-cta-mail {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--champ);
+    text-decoration: none;
+    padding: 12px 32px;
+    border: 1px solid var(--champ-border);
+    border-radius: 2px;
+    display: inline-block;
+    transition: all 0.3s;
+  }
+
+  .tier-cta-mail:hover {
+    background: var(--champ);
+    color: var(--bg);
+  }
+
+  /* New reading */
+  .new-reading {
+    display: block;
+    margin: 64px auto 0;
+    padding: 14px 40px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .new-reading:hover {
+    border-color: var(--champ-border);
+    color: var(--champ);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .page-wrap { padding: 0 20px; }
+    .hero { padding: 72px 0 20px; }
+    .stages-grid { grid-template-columns: 1fr; }
+    .teasers-grid { grid-template-columns: 1fr; }
+    .projections-grid { grid-template-columns: 1fr; }
+    .comp-table-header, .comp-row { grid-template-columns: 1.2fr 1fr 1fr; font-size: 10px; }
+    .comp-table-header .comp-cell:nth-child(4),
+    .comp-table-header .comp-cell:nth-child(5),
+    .comp-row .comp-cell:nth-child(4),
+    .comp-row .comp-cell:nth-child(5) { display: none; }
+    .credential .cred-nums { gap: 28px; }
+    .credential .cred-val { font-size: 26px; }
+    .index-number { font-size: 56px; }
+    .dossier-cover .subject-name { font-size: 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .loading-pulse { animation: none; opacity: 0.5; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Entrance -->
+  <div class="veyo-mark" id="veyoMark"><span>Veyo</span></div>
+
+  <section class="hero" id="heroSection">
+    <h1>Begin with a name.</h1>
+    <p class="whisper">Any creator. Any brand. Watch it read the way a maison reads its own.</p>
+  </section>
+
+  <div class="ornament" id="ornament"><span class="mark">§</span></div>
+
+  <section class="input-section" id="inputArea">
+    <input
+      type="text"
+      class="name-input"
+      id="nameInput"
+      placeholder=""
+      autocomplete="off"
+      spellcheck="false"
+    >
+
+    <div class="type-area">
+      <p class="type-label">What are we reading?</p>
+      <div class="type-selector">
+        <button class="type-btn" data-type="creator" id="btnCreator">Creator</button>
+        <button class="type-btn" data-type="brand" id="btnBrand">Brand</button>
+      </div>
+    </div>
+
+    <div class="cta-area">
+      <button class="read-btn" id="readBtn">Read</button>
+      <p class="input-note">Confidential · By appointment</p>
+    </div>
+
+    <p class="error-msg" id="errorMsg"></p>
+  </section>
+
+  <section class="credential" id="credentialSection">
+    <div class="cred-border"></div>
+    <p>Built over nearly a decade of certified luxury evaluation</p>
+    <div class="cred-nums">
+      <div class="cred-item">
+        <div class="cred-val">25+</div>
+        <div class="cred-label">Maisons</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-val">80+</div>
+        <div class="cred-label">Missions</div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-val">10+</div>
+        <div class="cred-label">Countries</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer" id="footerSection">
+    <div class="footer-line"></div>
+    <div class="footer-location">Stockholm, Sweden</div>
+    <div class="footer-appointment">By appointment only</div>
+    <a href="https://veyo.house">veyo.house</a>
+  </div>
+
+  <!-- Loading state with progressive reveal -->
+  <section class="loading-state" id="loadingState">
+    <div class="loading-cover">
+      <div class="cover-brand">Veyo</div>
+      <div class="cover-line"></div>
+      <div class="cover-eyebrow">Confidential Dossier</div>
+      <div class="cover-no" id="loadDossierNo">No. 001</div>
+      <div class="cover-prepared">Prepared for</div>
+      <div class="cover-subject" id="loadSubject">—</div>
+      <div class="cover-meta" id="loadMeta"><span>Locating subject in the field...</span></div>
+      <div class="cover-footer">Public Surface Analysis · July 2026</div>
+    </div>
+
+    <div class="loading-agents">
+      <div class="loading-pulse"></div>
+      <div class="loading-agent" id="loadAgent">A·02 CARTOGRAPHER</div>
+      <div class="loading-action" id="loadAction">Locating subject across platforms...</div>
+      <div class="loading-timer" id="loadTimer">0:00</div>
+    </div>
+  </section>
+
+  <!-- Dossier (final rendering) -->
+  <section class="dossier" id="dossier">
+    <!-- Injected by JS -->
+  </section>
+
+</div>
+
+<script>
+(function() {
+
+  // ═══════════════════════════════════════════════════
+  // CONFIGURATION
+  // ═══════════════════════════════════════════════════
+
+  const PROXY_URL = 'https://veyo-proxy.raspy-butterfly-8f28.workers.dev';
+
+  const PLACEHOLDER_NAMES = [
+    'Hermès', '@MrBeast', 'Acne Studios', '@emmachamberlain',
+    'Bottega Veneta', '@larolitadiaz', 'Our Legacy', '@khloekardashian',
+    'Stenströms', '@charlidamelio', 'Totême', '@amandastenberg',
+    'Saint Laurent', '@by_velcheva', 'Ferrari', '@bellahadid',
+    'COS', '@alexcooper'
+  ];
+
+  const LOADING_SEQUENCE_CREATOR = [
+    { agent: 'A·02 CARTOGRAPHER', action: 'Locating subject across platforms...', wait: 4000 },
+    { agent: 'A·04 PROFILER', action: 'Mapping audience architecture and engagement patterns...', wait: 8000 },
+    { agent: 'A·01 CODIFIER', action: 'Evaluating voice signature and brand identity...', wait: 10000 },
+    { agent: 'A·08 ORACLE', action: 'Diagnosing monetization structure and revenue leaks...', wait: 12000 },
+    { agent: 'A·03 STRATEGIST', action: 'Mapping competitive field and whitespace...', wait: 10000 },
+    { agent: 'A·07 COMPOSER', action: 'Assembling the dossier...', wait: 10000 },
+    { agent: 'VEYO INTELLIGENCE', action: 'Finalizing your reading...', wait: 60000 }
+  ];
+
+  const LOADING_SEQUENCE_BRAND = [
+    { agent: 'A·02 CARTOGRAPHER', action: 'Locating the house in the market...', wait: 4000 },
+    { agent: 'A·06 SENTINEL', action: 'Evaluating digital storefront and arrival experience...', wait: 8000 },
+    { agent: 'A·01 CODIFIER', action: 'Reading brand identity and communication coherence...', wait: 10000 },
+    { agent: 'A·04 PROFILER', action: 'Assessing service architecture and client journey...', wait: 12000 },
+    { agent: 'A·03 STRATEGIST', action: 'Mapping competitive positioning and whitespace...', wait: 10000 },
+    { agent: 'A·08 ORACLE', action: 'Calibrating pricing and revenue projections...', wait: 10000 },
+    { agent: 'VEYO INTELLIGENCE', action: 'Assembling the dossier...', wait: 60000 }
+  ];
+
+  // ═══════════════════════════════════════════════════
+  // DOM
+  // ═══════════════════════════════════════════════════
+
+  const nameInput = document.getElementById('nameInput');
+  const btnCreator = document.getElementById('btnCreator');
+  const btnBrand = document.getElementById('btnBrand');
+  const readBtn = document.getElementById('readBtn');
+  const inputArea = document.getElementById('inputArea');
+  const credentialSection = document.getElementById('credentialSection');
+  const footerSection = document.getElementById('footerSection');
+  const heroSection = document.getElementById('heroSection');
+  const veyoMark = document.getElementById('veyoMark');
+  const ornament = document.getElementById('ornament');
+  const loadingState = document.getElementById('loadingState');
+  const loadDossierNo = document.getElementById('loadDossierNo');
+  const loadSubject = document.getElementById('loadSubject');
+  const loadMeta = document.getElementById('loadMeta');
+  const loadAgent = document.getElementById('loadAgent');
+  const loadAction = document.getElementById('loadAction');
+  const loadTimer = document.getElementById('loadTimer');
+  const dossier = document.getElementById('dossier');
+  const errorMsg = document.getElementById('errorMsg');
+
+  let selectedType = null;
+  let timerInterval = null;
+  let typingActive = true;
+
+  // ═══════════════════════════════════════════════════
+  // ROTATING PLACEHOLDER
+  // ═══════════════════════════════════════════════════
+
+  let placeholderIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeTimeout = null;
+
+  function animatePlaceholder() {
+    if (!typingActive) return;
+    const current = PLACEHOLDER_NAMES[placeholderIndex];
+
+    if (!isDeleting) {
+      charIndex++;
+      nameInput.placeholder = current.substring(0, charIndex);
+      if (charIndex === current.length) {
+        typeTimeout = setTimeout(function() {
+          isDeleting = true;
+          animatePlaceholder();
+        }, 2000);
+        return;
+      }
+      typeTimeout = setTimeout(animatePlaceholder, 80 + Math.random() * 40);
+    } else {
+      charIndex--;
+      nameInput.placeholder = current.substring(0, charIndex);
+      if (charIndex === 0) {
+        isDeleting = false;
+        placeholderIndex = (placeholderIndex + 1) % PLACEHOLDER_NAMES.length;
+        typeTimeout = setTimeout(animatePlaceholder, 400);
+        return;
+      }
+      typeTimeout = setTimeout(animatePlaceholder, 40);
+    }
+  }
+
+  setTimeout(animatePlaceholder, 1800);
+
+  nameInput.addEventListener('focus', function() {
+    typingActive = false;
+    clearTimeout(typeTimeout);
+    if (nameInput.value.trim().length === 0) {
+      nameInput.placeholder = '@handle, brand name, or URL';
+    }
+  });
+
+  nameInput.addEventListener('blur', function() {
+    if (nameInput.value.trim().length === 0) {
+      typingActive = true;
+      charIndex = 0;
+      isDeleting = false;
+      setTimeout(animatePlaceholder, 600);
+    }
+  });
+
+  // ═══════════════════════════════════════════════════
+  // TYPE SELECTION
+  // ═══════════════════════════════════════════════════
+
+  btnCreator.addEventListener('click', function() { selectType('creator'); });
+  btnBrand.addEventListener('click', function() { selectType('brand'); });
+
+  function selectType(type) {
+    selectedType = type;
+    btnCreator.classList.toggle('selected', type === 'creator');
+    btnBrand.classList.toggle('selected', type === 'brand');
+    checkReady();
+  }
+
+  nameInput.addEventListener('input', checkReady);
+
+  function checkReady() {
+    const hasName = nameInput.value.trim().length > 0;
+    const hasType = selectedType !== null;
+    readBtn.classList.toggle('active', hasName && hasType);
+  }
+
+  // ═══════════════════════════════════════════════════
+  // READ ACTION
+  // ═══════════════════════════════════════════════════
+
+  readBtn.addEventListener('click', startReading);
+  nameInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && readBtn.classList.contains('active')) startReading();
+  });
+
+  async function startReading() {
+    const name = nameInput.value.trim();
+    if (!name || !selectedType) return;
+
+    // Hide entrance
+    errorMsg.classList.remove('visible');
+    heroSection.style.display = 'none';
+    veyoMark.style.display = 'none';
+    ornament.style.display = 'none';
+    inputArea.style.display = 'none';
+    credentialSection.style.display = 'none';
+    footerSection.style.display = 'none';
+
+    // Show loading
+    loadingState.classList.add('visible');
+    dossier.classList.remove('visible');
+
+    // Initial loading state
+    const dossierNumber = 'No. ' + String(Math.floor(Math.random() * 30) + 1).padStart(3, '0');
+    loadDossierNo.textContent = dossierNumber;
+    loadSubject.textContent = name;
+    loadMeta.innerHTML = '<span>Locating subject in the field...</span>';
+
+    // Start agent narrative
+    const sequence = selectedType === 'creator' ? LOADING_SEQUENCE_CREATOR : LOADING_SEQUENCE_BRAND;
+    let phaseIndex = 0;
+    let phaseTimer = null;
+
+    function advancePhase() {
+      if (phaseIndex >= sequence.length) return;
+      const phase = sequence[phaseIndex];
+      loadAgent.style.opacity = '0';
+      loadAction.style.opacity = '0';
+      setTimeout(function() {
+        loadAgent.textContent = phase.agent;
+        loadAction.textContent = phase.action;
+        loadAgent.style.opacity = '0.55';
+        loadAction.style.opacity = '1';
+      }, 400);
+      phaseIndex++;
+      phaseTimer = setTimeout(advancePhase, phase.wait);
+    }
+    advancePhase();
+
+    // Timer
+    let seconds = 0;
+    timerInterval = setInterval(function() {
+      seconds++;
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      loadTimer.textContent = m + ':' + s.toString().padStart(2, '0');
+    }, 1000);
+
+    // Fire request
+    try {
+      const response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject_name: name,
+          reading_type: selectedType
+        })
+      });
+
+      if (!response.ok) throw new Error('API returned ' + response.status);
+
+      // Accumulate the streamed response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let accumulated = '';
+      let earlySubjectRevealed = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split('\n\n');
+        buffer = events.pop() || '';
+
+        for (const event of events) {
+          const lines = event.split('\n');
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === '[DONE]') continue;
+            try {
+              const evtData = JSON.parse(jsonStr);
+              if (evtData.type === 'content_block_delta' &&
+                  evtData.delta &&
+                  evtData.delta.type === 'text_delta') {
+                accumulated += evtData.delta.text;
+
+                // Attempt early reveal of subject metadata as JSON streams in
+                if (!earlySubjectRevealed && accumulated.length > 300) {
+                  tryEarlyReveal(accumulated);
+                  if (loadSubject.textContent !== name) earlySubjectRevealed = true;
+                }
+              }
+            } catch (e) {
+              // Skip malformed chunks
+            }
+          }
+        }
+      }
+
+      clearInterval(timerInterval);
+      clearTimeout(phaseTimer);
+
+      // Extract and parse the final JSON
+      const jsonData = extractJSON(accumulated);
+      if (!jsonData) throw new Error('Could not parse dossier JSON');
+
+      // Render the dossier
+      renderDossier(jsonData, dossierNumber);
+      loadingState.classList.remove('visible');
+      dossier.classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      clearInterval(timerInterval);
+      clearTimeout(phaseTimer);
+      loadingState.classList.remove('visible');
+      restoreEntrance();
+      errorMsg.textContent = 'The reading could not be completed. Please try again.';
+      errorMsg.classList.add('visible');
+      console.error('Veyo reading error:', err);
+    }
+  }
+
+  function restoreEntrance() {
+    heroSection.style.display = '';
+    veyoMark.style.display = '';
+    ornament.style.display = '';
+    inputArea.style.display = '';
+    credentialSection.style.display = '';
+    footerSection.style.display = '';
+  }
+
+  // ═══════════════════════════════════════════════════
+  // EARLY REVEAL (progressive during loading)
+  // ═══════════════════════════════════════════════════
+
+  function tryEarlyReveal(text) {
+    // Try to extract subject block early as JSON streams
+    try {
+      const nameMatch = text.match(/"name"\s*:\s*"([^"]+)"/);
+      const categoryMatch = text.match(/"category"\s*:\s*"([^"]+)"/);
+      const locationMatch = text.match(/"location"\s*:\s*"([^"]+)"/);
+      const followersMatch = text.match(/"followers"\s*:\s*"([^"]+)"/);
+      const archetypeMatch = text.match(/"archetype"\s*:\s*"([^"]+)"/);
+
+      if (nameMatch) {
+        loadSubject.textContent = nameMatch[1];
+      }
+
+      const metaParts = [];
+      if (categoryMatch) metaParts.push(categoryMatch[1]);
+      if (locationMatch) metaParts.push(locationMatch[1]);
+      if (followersMatch && followersMatch[1] !== 'Not publicly disclosed') {
+        metaParts.push(followersMatch[1]);
+      }
+      if (archetypeMatch) metaParts.push('<span>' + archetypeMatch[1] + '</span>');
+
+      if (metaParts.length > 0) {
+        loadMeta.innerHTML = metaParts.join(' <span style="color:var(--champ);opacity:0.5">·</span> ');
+      }
+    } catch (e) {}
+  }
+
+  // ═══════════════════════════════════════════════════
+  // JSON EXTRACTION
+  // ═══════════════════════════════════════════════════
+
+  function extractJSON(text) {
+    // Find the outermost JSON object
+    const start = text.indexOf('{');
+    if (start === -1) return null;
+
+    let depth = 0;
+    let inString = false;
+    let escape = false;
+    for (let i = start; i < text.length; i++) {
+      const ch = text[i];
+      if (escape) { escape = false; continue; }
+      if (ch === '\\') { escape = true; continue; }
+      if (ch === '"') { inString = !inString; continue; }
+      if (inString) continue;
+      if (ch === '{') depth++;
+      else if (ch === '}') {
+        depth--;
+        if (depth === 0) {
+          const jsonStr = text.substring(start, i + 1);
+          try {
+            return JSON.parse(jsonStr);
+          } catch (e) {
+            console.error('JSON parse error:', e);
+            return null;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  // ═══════════════════════════════════════════════════
+  // DOSSIER RENDERING
+  // ═══════════════════════════════════════════════════
+
+  function esc(s) {
+    if (s === undefined || s === null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderDossier(d, dossierNumber) {
+    const kind = selectedType === 'brand' ? 'Brand' : 'Creator';
+    const html = [
+      renderCover(d, dossierNumber, kind),
+      renderReading(d),
+      renderDiagnosis(d),
+      renderStages(d),
+      renderRoadmap(d),
+      renderFounderNote(d, kind),
+      '<button class="new-reading" id="newReading">Begin another reading</button>'
+    ].join('');
+
+    dossier.innerHTML = html;
+
+    const newReadingBtn = document.getElementById('newReading');
+    if (newReadingBtn) {
+      newReadingBtn.addEventListener('click', resetToEntrance);
+    }
+  }
+
+  function renderCover(d, dossierNumber, kind) {
+    const s = d.subject || {};
+    const metaParts = [];
+    if (s.category) metaParts.push(esc(s.category));
+    if (s.location) metaParts.push(esc(s.location));
+    if (s.followers && s.followers !== 'Not publicly disclosed') {
+      metaParts.push(esc(s.followers));
+    }
+    const meta = metaParts.join('<span class="meta-sep">·</span>');
+
+    return `
+      <div class="dossier-cover">
+        <div class="brand-mark">Veyo</div>
+        <div class="divider"></div>
+        <div class="eyebrow">Confidential Dossier</div>
+        <div class="dossier-no">${esc(dossierNumber)}</div>
+        <div class="prepared-label">Prepared for</div>
+        <div class="subject-name">${esc(s.name || 'Unknown Subject')}</div>
+        <div class="subject-meta">${meta}</div>
+        ${s.archetype ? `<div class="subject-meta" style="margin-top:12px"><em style="font-family:var(--font-display);font-style:italic;text-transform:none;letter-spacing:0.02em;font-size:14px;color:var(--champ);opacity:0.85">${esc(s.archetype)}</em></div>` : ''}
+        <div class="cover-tail">${kind} Reading · Public Surface Analysis · July 2026<br/>Stockholm</div>
+      </div>
+    `;
+  }
+
+  function renderReading(d) {
+    const idx = d.veyo_index || {};
+    const stages = d.stages || [];
+    const proj = d.revenue_projections || {};
+
+    const tesisHtml = d.tesis ? `<div class="tesis">${esc(d.tesis)}</div>` : '';
+
+    const indexHtml = `
+      <div class="index-block">
+        <div class="index-label">Veyo Index</div>
+        <div class="index-number">${esc(idx.score)}</div>
+        <div class="index-outof">out of ${esc(idx.out_of || 60)}</div>
+        ${idx.label ? `<div class="index-badge">${esc(idx.label)}</div>` : ''}
+        ${idx.percentile_note ? `<div class="index-percentile">${esc(idx.percentile_note)}</div>` : ''}
+      </div>
+    `;
+
+    const stagesHtml = stages.length ? `
+      <div class="stages-grid">
+        ${stages.map(function(st) {
+          const pct = (st.score / 10) * 100;
+          return `
+            <div class="stage-card">
+              <div class="stage-num">Stage ${esc(st.number)}</div>
+              <div class="stage-name">${esc(st.name)}</div>
+              <div class="stage-bar"><div class="stage-fill" style="width:${pct}%"></div></div>
+              <div class="stage-meta">
+                <span>${esc(st.level || '')}${st.percentile ? ' · ' + esc(st.percentile) : ''}</span>
+                <span class="stage-score">${esc(st.score)}<span style="opacity:0.5;font-size:12px">/10</span></span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    ` : '';
+
+    const projHtml = proj.conservative ? `
+      <div class="projections">
+        <div class="projections-header">
+          <div class="projections-eyebrow">Projected uplift · ${esc(proj.horizon || '90-day')} horizon</div>
+          <div class="projections-title">${esc(proj.metric || 'Revenue per subscriber')}</div>
+        </div>
+        <div class="projections-grid">
+          <div class="proj-cell">
+            <div class="proj-tier">Conservative</div>
+            <div class="proj-value">${esc(proj.conservative.uplift)}</div>
+            <div class="proj-metric">${esc(proj.metric || '')}</div>
+            <div class="proj-condition">${esc(proj.conservative.condition)}</div>
+          </div>
+          <div class="proj-cell middle">
+            <div class="proj-tier">Probable</div>
+            <div class="proj-value">${esc(proj.probable.uplift)}</div>
+            <div class="proj-metric">${esc(proj.metric || '')}</div>
+            <div class="proj-condition">${esc(proj.probable.condition)}</div>
+          </div>
+          <div class="proj-cell">
+            <div class="proj-tier">Optimistic</div>
+            <div class="proj-value">${esc(proj.optimistic.uplift)}</div>
+            <div class="proj-metric">${esc(proj.metric || '')}</div>
+            <div class="proj-condition">${esc(proj.optimistic.condition)}</div>
+          </div>
+        </div>
+      </div>
+    ` : '';
+
+    const findingHtml = d.strategic_finding ? `
+      <div class="finding-block">
+        <div class="finding-label">Strategic Finding</div>
+        <div class="finding-text">${esc(d.strategic_finding)}</div>
+      </div>
+    ` : '';
+
+    const priorityHtml = d.priority_action ? `
+      <div class="priority-block">
+        <div class="priority-label">Priority Action · Next 30 Days</div>
+        <div class="priority-text">${esc(d.priority_action)}</div>
+      </div>
+    ` : '';
+
+    return `
+      <div class="section">
+        <div class="section-eyebrow">I · The Reading</div>
+        <div class="section-title">Diagnostic Summary</div>
+        <div class="section-subtitle">Where the brand stands · What it costs · What changes first</div>
+        ${tesisHtml}
+        ${indexHtml}
+        ${stagesHtml}
+        ${projHtml}
+        ${findingHtml}
+        ${priorityHtml}
+      </div>
+    `;
+  }
+
+  function renderDiagnosis(d) {
+    const obs = d.critical_observations || [];
+    const gaps = d.structural_gaps || [];
+    const comp = d.competitive_benchmark;
+
+    const obsHtml = obs.map(function(o) {
+      return `
+        <div class="observation">
+          <div class="observation-title">${esc(o.title)}</div>
+          <div class="observation-analysis">${esc(o.analysis)}</div>
+          <div class="observation-meta">
+            <div class="meta-label">Observed</div>
+            <div class="meta-value">${esc(o.observed)}</div>
+            <div class="meta-label">Benchmark</div>
+            <div class="meta-value">${esc(o.benchmark)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const gapsHtml = gaps.map(function(g) {
+      return `
+        <div class="observation">
+          <div class="observation-title">${esc(g.title)}</div>
+          <div class="observation-analysis">${esc(g.analysis)}</div>
+          <div class="observation-meta">
+            <div class="meta-label">Observed</div>
+            <div class="meta-value">${esc(g.observed)}</div>
+            <div class="meta-label">Benchmark</div>
+            <div class="meta-value">${esc(g.benchmark)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    let compHtml = '';
+    if (comp && comp.rows) {
+      const headers = comp.columns || ['Dimension', 'Volume', 'Subject', 'Intimate', 'Maison'];
+      compHtml = `
+        <div class="comp-table">
+          <div class="comp-table-header">
+            ${headers.map(function(h, i) {
+              const cls = i === 2 ? 'comp-cell subject-col' : 'comp-cell';
+              return `<div class="${cls}">${esc(h)}</div>`;
+            }).join('')}
+          </div>
+          ${comp.rows.map(function(r) {
+            return `
+              <div class="comp-row">
+                <div class="comp-cell">${esc(r.dimension)}</div>
+                <div class="comp-cell">${esc(r.volume)}</div>
+                <div class="comp-cell subject-col">${esc(r.subject)}</div>
+                <div class="comp-cell">${esc(r.intimate)}</div>
+                <div class="comp-cell">${esc(r.maison)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="section">
+        <div class="section-eyebrow">II · Brand Diagnosis</div>
+        <div class="section-title">What the Public Surface Reveals</div>
+        <div class="section-subtitle">Observations a standard audit misses</div>
+
+        ${obs.length ? `<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champ);opacity:0.7;margin-bottom:8px">Critical Observations</div>` : ''}
+        ${obsHtml}
+
+        ${gaps.length ? `<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champ);opacity:0.7;margin:48px 0 8px">Structural Gaps</div>` : ''}
+        ${gapsHtml}
+
+        ${compHtml ? `<div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champ);opacity:0.7;margin:56px 0 8px">Competitive Benchmark</div>` : ''}
+        ${compHtml}
+      </div>
+    `;
+  }
+
+  function renderStages(d) {
+    const sa = d.stage_analysis || {};
+    const s1 = sa.stage_I;
+    const s2 = sa.stage_II;
+    const stages = d.stages || [];
+    const findStage = function(num) { return stages.find(function(s) { return s.number === num; }); };
+
+    const s1Data = findStage('I');
+    const s2Data = findStage('II');
+    const s3Data = findStage('III');
+    const s4Data = findStage('IV');
+    const s5Data = findStage('V');
+    const s6Data = findStage('VI');
+
+    const renderFullStage = function(stageInfo, stageData) {
+      if (!stageInfo || !stageData) return '';
+      return `
+        <div class="stage-full">
+          <div class="stage-header">
+            <div class="stage-title">
+              <span class="stage-roman">${esc(stageData.number)}</span>${esc(stageData.name)}
+            </div>
+            <div class="stage-score-big">${esc(stageData.score)}/10 · ${esc(stageData.level)}</div>
+          </div>
+          <div class="stage-narrative">${esc(stageInfo.narrative)}</div>
+          <div class="critical-gap">
+            <div class="critical-gap-label">Critical Gap</div>
+            <div class="critical-gap-text">${esc(stageInfo.critical_gap)}</div>
+          </div>
+          <div class="recommendations">
+            <div class="recommendations-label">Recommendations</div>
+            ${(stageInfo.recommendations || []).map(function(r) {
+              return `<div class="recommendation">${esc(r)}</div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    const renderTeaser = function(data, teaserText) {
+      if (!data) return '';
+      return `
+        <div class="teaser">
+          <div class="teaser-header">
+            <div class="teaser-title"><span class="roman">${esc(data.number)}</span>${esc(data.name)}</div>
+            <div class="teaser-score">${esc(data.score)}/10</div>
+          </div>
+          <div class="teaser-text">${esc(teaserText || '...')}</div>
+          <div class="teaser-cta">Full Analysis · Tier II · hello@veyo.house</div>
+        </div>
+      `;
+    };
+
+    return `
+      <div class="section">
+        <div class="section-eyebrow">III · Stage Evaluation</div>
+        <div class="section-title">Six-Stage Reading</div>
+        <div class="section-subtitle">Stages I & II full · Stages III to VI restricted to Tier II</div>
+
+        ${renderFullStage(s1, s1Data)}
+        ${renderFullStage(s2, s2Data)}
+
+        <div class="teasers-grid">
+          ${renderTeaser(s3Data, sa.stage_III_teaser)}
+          ${renderTeaser(s4Data, sa.stage_IV_teaser)}
+          ${renderTeaser(s5Data, sa.stage_V_teaser)}
+          ${renderTeaser(s6Data, sa.stage_VI_teaser)}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderRoadmap(d) {
+    const r = d.roadmap || {};
+    const phases = ['phase_1', 'phase_2', 'phase_3'];
+
+    const renderPhase = function(phaseKey) {
+      const p = r[phaseKey];
+      if (!p) return '';
+      return `
+        <div class="phase">
+          <div class="phase-header">
+            <div class="phase-label">Days ${esc(p.days)}</div>
+            <div class="phase-title">${esc(p.title)}</div>
+            <div class="phase-subtitle">${esc(p.subtitle)}</div>
+          </div>
+          <div class="phase-actions">
+            ${(p.actions || []).map(function(a) {
+              return `
+                <div class="action-card">
+                  <div class="action-agent">${esc(a.agent)}</div>
+                  <div class="action-task">${esc(a.task)}</div>
+                  <div class="action-desc">${esc(a.description)}</div>
+                  <div class="action-outcome">${esc(a.outcome)}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    return `
+      <div class="section roadmap">
+        <div class="section-eyebrow">IV · 90-Day Roadmap</div>
+        <div class="section-title">Three Phases</div>
+        <div class="section-subtitle">Priority sequencing · Expected outcomes · Veyo agent responsible</div>
+        ${phases.map(renderPhase).join('')}
+      </div>
+    `;
+  }
+
+  function renderFounderNote(d, kind) {
+    const subjectKind = kind.toLowerCase();
+    return `
+      <div class="founder-note">
+        <div class="founder-note-body">
+          What you're reading is what Veyo can see in forty minutes of public surface analysis. The gaps identified here are visible from the outside.
+          What we cannot see from the outside is where the real leverage lives: the ${subjectKind === 'brand' ? 'client data, the retail conversation patterns, the churn happening silently' : 'subscriber data, the DM patterns, the revenue per cohort, the churn silently happening'} before anyone notices.
+          <em>That is where a full Veyo evaluation operates. This dossier is an invitation to that conversation.</em>
+        </div>
+
+        <div class="founder-signature">
+          <div class="founder-name">Mauricio Ossa</div>
+          <div class="founder-role">Founder · Veyo</div>
+          <div class="founder-cred">Certified Evaluator · Hermès · Rolex · Dior · Ferrari · Louis Vuitton</div>
+          <div class="founder-contact">hello@veyo.house · Stockholm, Sweden</div>
+        </div>
+
+        <div class="tier-cta">
+          <div class="tier-cta-label">To Begin</div>
+          <div class="tier-cta-text">Reply to this reading with one word. We handle the rest.</div>
+          <a class="tier-cta-mail" href="mailto:hello@veyo.house?subject=Tier%20II%20Dossier%20Request">hello@veyo.house</a>
+        </div>
+      </div>
+    `;
+  }
+
+  // ═══════════════════════════════════════════════════
+  // RESET
+  // ═══════════════════════════════════════════════════
+
+  function resetToEntrance() {
+    dossier.classList.remove('visible');
+    dossier.innerHTML = '';
+    restoreEntrance();
+    nameInput.value = '';
+    selectedType = null;
+    btnCreator.classList.remove('selected');
+    btnBrand.classList.remove('selected');
+    readBtn.classList.remove('active');
+    typingActive = true;
+    charIndex = 0;
+    isDeleting = false;
+    placeholderIndex = 0;
+    clearTimeout(typeTimeout);
+    setTimeout(animatePlaceholder, 600);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+})();
+</script>
+
+</body>
+</html>
